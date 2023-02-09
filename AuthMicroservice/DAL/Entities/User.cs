@@ -2,6 +2,9 @@
 
 namespace AuthMicroservice.DAL.Entities;
 
+/// <summary>
+/// 
+/// </summary>
 public class User : IdentityUser
 {
 }

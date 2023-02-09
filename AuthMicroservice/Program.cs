@@ -4,7 +4,7 @@ using AuthMicroservice.DAL.Entities;
 using AuthMicroservice.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Models; 
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 

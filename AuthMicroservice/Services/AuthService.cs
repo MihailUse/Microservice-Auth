@@ -8,30 +8,47 @@ using System.Security.Claims;
 
 namespace AuthMicroservice.Services;
 
+/// <summary>
+/// 
+/// </summary>
 public class AuthService
 {
     private readonly AuthConfig _authConfig;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="authConfig"></param>
     public AuthService(IOptions<AuthConfig> authConfig)
     {
         _authConfig = authConfig.Value;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
     public TokenModel GenerateTokens(User user)
     {
         Claim[] tokenClaims = new Claim[]
         {
-                new Claim(JwtRegisteredClaimNames.Name, user.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti, user.Id.ToString()),
+            new Claim("UserId", user.Id),
+        };
+        
+        Claim[] refreshTokenClaims = new Claim[]
+        {
+            new Claim("UserId", user.Id),
         };
 
         return new TokenModel()
         {
-            AccessToken = GenerateEncodedToken(tokenClaims, _authConfig.LifeTime)
+            AccessToken = GenerateEncodedToken(tokenClaims, _authConfig.LifeTime),
+            RefreshToken = GenerateEncodedToken(refreshTokenClaims, _authConfig.RefreshLifeTime)
         };
     }
 
-    private string GenerateEncodedToken(Claim[] claims, int lifeTime)
+    private string GenerateEncodedToken(IEnumerable<Claim> claims, int lifeTime)
     {
         var dateTime = DateTime.UtcNow;
         var token = new JwtSecurityToken(
