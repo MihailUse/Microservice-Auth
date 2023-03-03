@@ -101,7 +101,7 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TokenModel))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> Refresh(string refreshToken)
+    public async Task<IActionResult> Refresh([FromBody] string refreshToken)
     {
         var tokenValidationParameters = new TokenValidationParameters
         {
